@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Painel – Tudo Gostoso</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+
+
+:root{box-sizing:border-box;--bg:#FFC700;--ink:#3B1F14;--card:#FFF3C4;--red:#C8281E;--red-ink:#fff;--muted:#6b3f2c;--line:#3B1F14;--choc:#3a1c10;color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#2a160d;--ink:#FFE9B0;--card:#3d2216;--red:#FF5A4A;--red-ink:#2a160d;--muted:#e0b98f;--line:#FFE9B0;--choc:#5b3220;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;position:relative;background:var(--bg);color:var(--ink);font:17px/1.5 'Nunito',system-ui,sans-serif;padding-bottom:110px;overflow-x:hidden}
+h1,h2,h3{font-family:'Bagel Fat One','Arial Black',sans-serif;font-weight:400;margin:0;line-height:1.05}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+#drips{position:absolute;top:0;left:0;right:0;height:0;pointer-events:none;z-index:1}
+#drips:before{content:"";position:absolute;top:0;left:0;right:0;height:28px;background:var(--choc)}
+.drip{position:absolute;top:0;height:var(--h);background:linear-gradient(90deg,var(--choc),#6a3722 45%,var(--choc));border-radius:0 0 999px 999px;animation:drip 1.5s cubic-bezier(.3,1.35,.5,1) both}
+@keyframes drip{from{height:0}}
+.hero{padding:150px 0 36px;position:relative;z-index:2}
+.sub{font-weight:800;margin:0 0 6px;animation:up .6s 1s both}
+.hero h1{font-size:clamp(64px,17vw,150px);color:var(--red);text-shadow:4px 4px 0 var(--ink);letter-spacing:-1px}
+.hero h1 span{display:block;animation:up .8s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 span:nth-child(1){animation-delay:.9s}.hero h1 span:nth-child(2){animation-delay:1.1s}
+@keyframes up{from{opacity:0;transform:translateY(50px) rotate(2deg)}to{opacity:1;transform:none}}
+.hero p{max-width:34ch;font-size:19px;font-weight:600;margin:20px 0 24px;animation:up .7s 1.35s both}
+.hero .acts{display:flex;gap:12px;flex-wrap:wrap;animation:up .7s 1.5s both}
+.btn{display:inline-block;background:var(--ink);color:var(--bg);font:800 17px 'Nunito',sans-serif;padding:13px 24px;border:3px solid var(--line);border-radius:999px;text-decoration:none;cursor:pointer;transition:transform .15s}
+.btn:active{transform:scale(.95)}
+.btn.red{background:var(--red);color:var(--red-ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.sm{padding:9px 18px;font-size:16px}
+:is(.btn,.tabs button,.qty button,input):focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:10px;overflow-x:auto;padding:12px 20px;margin:0 -20px;border-bottom:3px solid var(--line)}
+.tabs button{flex:none;font:800 16px 'Nunito',sans-serif;color:var(--ink);background:transparent;border:3px solid var(--line);border-radius:999px;padding:8px 18px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;padding:26px 0}
+.item{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:6px;box-shadow:6px 6px 0 var(--line)}
+.item h3{font-size:23px;color:var(--red)}
+.item p{margin:0;color:var(--muted);font-size:15px;flex:1}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}
+.price{font-weight:800;font-size:19px}
+.contact{padding:26px 0 10px;border-top:3px solid var(--line);font-weight:600}
+.contact a{color:var(--ink);font-weight:800}
+footer{padding:6px 0 30px;font-size:14px;color:var(--muted)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:var(--bg);padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.8,.2,1);z-index:10}
+.bar.show{transform:none}
+.bar .in{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.bar b{font-size:19px}
+.bar .btn{background:var(--red);color:var(--red-ink);border-color:var(--red)}
+dialog{border:3px solid var(--line);border-radius:22px;background:var(--card);color:var(--ink);padding:0;width:min(520px,94vw);max-height:88vh;box-shadow:8px 8px 0 var(--line)}
+dialog[open]{display:flex;flex-direction:column}
+dialog::backdrop{background:rgba(30,10,0,.6)}
+.dh{padding:18px 20px 4px}.dh h3{font-size:26px;color:var(--red)}.dh p{margin:4px 0 0;color:var(--muted);font-size:15px}
+.db{padding:6px 20px;overflow:auto}
+.df{padding:14px 20px;border-top:3px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+fieldset{border:0;padding:0;margin:12px 0}
+legend{font-weight:800;padding:0}legend small{font-weight:600;color:var(--muted)}
+label.o{display:flex;align-items:center;gap:10px;padding:7px 0;cursor:pointer}
+label.o input{width:22px;height:22px;accent-color:var(--red);flex:none}
+label.o b{margin-left:auto}
+.line{padding:10px 0;border-bottom:2px dashed var(--line)}
+.line .top{display:flex;justify-content:space-between;gap:10px;font-weight:800}
+.line small{display:block;color:var(--muted)}
+.qty{display:flex;align-items:center;gap:10px;margin-top:6px}
+.qty button{width:36px;height:36px;border-radius:50%;border:3px solid var(--line);background:var(--red);color:var(--red-ink);font:800 20px 'Nunito',sans-serif;cursor:pointer;line-height:1}
+.qty button.m{background:transparent;color:var(--ink)}
+.qty output{min-width:20px;text-align:center;font-weight:800}
+.fld{display:block;width:100%;margin-top:10px;padding:11px 14px;border:3px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font:600 16px 'Nunito',sans-serif}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:20px;margin-top:12px}
+.banner{background:var(--red);color:var(--red-ink);font-weight:800;border:3px solid var(--line);border-radius:18px;padding:14px 18px;margin:20px 0 0;box-shadow:6px 6px 0 var(--line)}
+.adm{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;z-index:20}
+.item.off{opacity:.55}
+.bar .acts2{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.bar .btn.ghost{background:transparent;color:var(--bg);border-color:var(--bg)}
+#admin h4{margin:18px 0 6px;font:400 20px 'Bagel Fat One',sans-serif;color:var(--red)}
+.arow{display:grid;grid-template-columns:1fr 92px;gap:6px;padding:8px 0;border-bottom:2px dashed var(--line)}
+.arow .fld{margin:0;padding:8px 10px;font-size:15px}
+.arow .full,.arow label{grid-column:1/-1}
+.arow label{display:flex;gap:8px;align-items:center;font-weight:700}
+.arow label input{width:20px;height:20px;accent-color:var(--red)}
+.acct{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:16px;animation:up .7s 1.6s both}
+.av{position:relative;flex:none;width:46px;height:46px;border-radius:50%;border:3px solid var(--line);background:var(--red);color:var(--red-ink);display:grid;place-items:center;font:400 22px 'Bagel Fat One',sans-serif}
+.av:before{content:attr(data-i)}
+.av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.av i{position:absolute;right:-4px;bottom:-4px;width:15px;height:15px;border-radius:50%;background:#2ecc71;border:3px solid var(--line)}
+.who{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.who b{font-size:17px}.who small{font-weight:600;color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.logo{position:absolute;right:0;top:80px;width:clamp(104px,28vw,210px);z-index:3;rotate:-4deg;animation:up .8s 1.2s both}
+.ban{display:flex;gap:12px;justify-content:center;padding-top:22px}
+.ban:empty{display:none}
+.ban img{flex:1 1 0;min-width:0;max-width:100%;height:clamp(130px,32vw,230px);object-fit:contain}
+.ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;margin-bottom:4px;background:var(--bg)}
+.art{display:grid;place-items:center}.art svg{width:86%;height:auto}.art .k{stroke:var(--line)}
+.themebtn{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:12px;z-index:20;background:var(--card);color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+.acct{animation:none!important;margin:10px 0 0}
+.ptitle{font-size:clamp(34px,9vw,60px);color:var(--red);text-shadow:3px 3px 0 var(--ink);margin-top:10px}
+.sec{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:18px;margin:18px 0;box-shadow:6px 6px 0 var(--line)}
+.sec h4{font:400 24px 'Bagel Fat One',sans-serif;color:var(--red);margin:0 0 10px}
+.sec h5{font:400 19px 'Bagel Fat One',sans-serif;margin:18px 0 4px}
+.sec .row{margin:6px 0}
+.bar2{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:24px;z-index:5}
+.bar2 span{flex:1;font-weight:800;min-width:120px}
+.bar2 .btn.ghost{color:var(--bg);border-color:var(--bg)}
+.arow{grid-template-columns:1fr 100px}
+
+
+.ptitle{font-size:clamp(34px,9vw,60px);color:var(--red);text-shadow:3px 3px 0 var(--ink);margin-top:10px}
+.sec{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:18px;margin:18px 0;box-shadow:6px 6px 0 var(--line)}
+.sec h4{font:400 24px 'Bagel Fat One',sans-serif;color:var(--red);margin:0 0 10px}
+.sec h5{font:400 19px 'Bagel Fat One',sans-serif;margin:18px 0 4px}
+.bar2{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:24px;z-index:5}
+.bar2 span{flex:1;font-weight:800;min-width:120px}
+.bar2 .btn.ghost{color:var(--bg);border-color:var(--bg)}
+.arow{grid-template-columns:1fr 100px}
+
+</style>
+</head>
+<body>
+<div class="wrap" style="padding-top:18px">
+  <h1 class="ptitle">Painel Tudo Gostoso</h1>
+  <div id="main"></div>
+</div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {getFirestore,doc,getDoc,onSnapshot,setDoc} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+// COLE AQUI o mesmo firebaseConfig do site
+const firebaseConfig={apiKey:"COLE_AQUI",authDomain:"COLE_AQUI",projectId:"COLE_AQUI",appId:"COLE_AQUI"};
+
+const g=(t,max,o,min=max)=>({t,max,min,o:o.map(x=>typeof x==="string"?[x,0]:x)});
+const RE=["Doce de leite","Creme de avelã","Ninho","Choc. branco","Brigadeiro"];
+const CF=["Granulado","Leite ninho","Amendoim","Coco queimado","Chocobol","Coco","Disquete colorido"];
+const SB=["Bacon","Calabresa","Frango","Carne desfiada","Queijo coalho","Pizza","Chocolate","Doce de leite"];
+const ADD=g("Adicionais",8,[["Bacon",3],["Calabresa",2],["Carne",3],["Frango",2],["Cream cheese",1],["Queijo coalho",3],["Molho cheddar",1],["Batata palha",1]],0);
+const OPC=g("Opcionais",2,["Tomate","Alface americano"],0);
+const GS=["Cheddar e bacon","Cheddar e calabresa","Cheddar e frango","Cheddar e carne","Queijo coalho e bacon","Queijo coalho e calabresa","Catupiry e bacon","Catupiry e calabresa","Catupiry e frango","Catupiry e carne"];
+const sz=(a,b,c)=>g("Tamanho",1,[["Pequena",a],["Média",b],["Grande",c]]);
+const MENU=[
+ {c:"Churros",items:[
+  {n:"Tradicional",d:"Escolha 1 recheio.",p:8,g:[g("Recheio",1,RE)]},
+  {n:"Gourmet",d:"1 recheio e cobertura, mais 2 confeitos.",p:10,g:[g("Recheio e cobertura",1,RE),g("Confeitos",2,CF)]},
+  {n:"Mini Espanhol",d:"8 mini churros açucarados com canela + 1 opção de recheio para acompanhar.",p:15,g:[g("Recheio",1,RE)]},
+  {n:"Espanhol",d:"6 palitos de churros açucarados com canela + 2 opções de recheio para acompanhar.",p:20,g:[g("Recheios",2,RE)]},
+  {n:"Piscininha",d:"6 mini churros açucarados com canela + 1 opção de cobertura.",p:10,g:[g("Cobertura",1,RE)]}]},
+ {c:"Crepe suíço",items:[
+  {n:"Crepe suíço pequeno",d:"Escolha 1 recheio.",p:8,g:[g("Recheio",1,SB)]},
+  {n:"Crepe suíço médio",d:"Escolha 2 recheios.",p:10,g:[g("Recheios",2,SB)]},
+  {n:"Crepe suíço grande",d:"Escolha 2 recheios.",p:12,g:[g("Recheios",2,SB)]}]},
+ {c:"Francês tradicional",items:[
+  {n:"Pizza",d:"Queijo mussarela, presunto ralado, azeitona, tomate, milho verde, catupiry, orégano.",p:18,g:[OPC,ADD]},
+  {n:"Calabresa",d:"Queijo mussarela, calabresa, tomate, cream cheese, batata palha.",p:19,g:[OPC,ADD]},
+  {n:"Frango",d:"Queijo mussarela, frango desfiado, cream cheese, tomate, batata palha.",p:20,g:[OPC,ADD]},
+  {n:"Bacon",d:"Queijo mussarela, bacon, cream cheese, tomate, batata palha.",p:21,g:[OPC,ADD]},
+  {n:"Carne",d:"Queijo mussarela, carne desfiada, tomate, cream cheese, cheddar.",p:22,g:[OPC,ADD]}]},
+ {c:"Francês especiais",items:[
+  {n:"Frango Fit",d:"Queijo coalho ralado, frango desfiado, alface americano, tomate.",p:21,g:[ADD]},
+  {n:"Franbacon",d:"Queijo mussarela, frango desfiado, bacon, tomate, catupiry, batata palha.",p:22,g:[ADD]},
+  {n:"Carne com banana",d:"Queijo mussarela, carne desfiada, banana, alface americano, cream cheese.",p:22,g:[ADD]},
+  {n:"Arretado de frango",d:"Queijo mussarela, frango desfiado, bacon, calabresa, queijo coalho, tomate, cream cheese, batata palha.",p:25,g:[ADD]},
+  {n:"Arretado de carne",d:"Queijo mussarela, carne desfiada, bacon, queijo coalho, calabresa, tomate, cream cheese, batata palha.",p:28,g:[ADD]},
+  {n:"Especial de queijo",d:"Queijo mussarela, queijo coalho, parmesão, requeijão tipo catupiry, cream cheese e cheddar.",p:20,g:[ADD]}]},
+ {c:"Francês doce",items:[
+  {n:"Bananut",d:"Creme de avelã, banana, leite em pó.",p:16},
+  {n:"Banoffe",d:"Doce de leite, banana, leite em pó.",p:16},
+  {n:"Romeu & Julieta",d:"Queijo coalho, goiabada, cream cheese.",p:16},
+  {n:"Morango Nut",d:"Creme de avelã, morango e leite em pó.",p:18},
+  {n:"Morangoffe",d:"Doce de leite, morango, leite em pó.",p:18}]},
+ {c:"Batatas",items:[
+  {n:"Batata tradicional",d:"Acompanha molhos tradicionais.",p:0,f:10,g:[sz(10,14,18)]},
+  {n:"Batata gourmet",d:"Escolha o tamanho e o sabor.",p:0,f:15,g:[sz(15,18,25),g("Sabor",1,GS)]}]},
+ {c:"Bebidas",items:[
+  {n:"Refri lata",p:6},{n:"Refri KS 290 ml",p:5},{n:"Guaraná 1 L",p:10},{n:"Coca-Cola 1 L",p:10},
+  {n:"Água mineral",p:3},{n:"Água mineral com gás",p:4}]}
+];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const clone=o=>JSON.parse(JSON.stringify(o));
+const keyOf=(c,it)=>c+"|"+it.n;
+const norm=s=>String(s||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+const fmt=c=>c?c.slice(0,4)+"-"+c.slice(4):"";
+const DEF={open:true,msg:"",wa:"5589994667404",ov:{},x:[],admins:[]};
+let C=clone(DEF),W=clone(DEF),dirty=false,note="",CODE="";
+try{CODE=sessionStorage.getItem("tg_code")||""}catch(e){}
+const main=$("#main");
+
+if(firebaseConfig.apiKey.startsWith("COLE")){
+  main.innerHTML='<div class="sec"><b>Falta configurar o Firebase.</b><br>Cole o firebaseConfig no código deste arquivo.</div>';
+}else{
+  const app=initializeApp(firebaseConfig),db=getFirestore(app),ref=doc(db,"loja","config");
+  const items=c=>MENU[c].items.map(it=>({...it,...(W.ov[keyOf(c,it)]||{}),key:keyOf(c,it)}))
+    .concat(W.x.filter(x=>x.c===c).map(x=>({...x,key:"x"+x.id,ext:1})));
+  function setF(k,f,v){
+    if(f==="p")v=parseFloat(String(v).replace(",","."))||0;
+    if(k[0]==="x"){const x=W.x.find(x=>"x"+x.id===k);if(x)x[f]=v}
+    else(W.ov[k]=W.ov[k]||{})[f]=v;
+  }
+  const drop=m=>{CODE="";try{sessionStorage.removeItem("tg_code")}catch(e){}note=m||"";draw()};
+  function draw(){
+    if(!CODE){
+      main.innerHTML=`<div class="sec"><h4>Conectar ao site</h4>
+        <p>1. Abra o site dos clientes e entre com o Google (conta de admin).<br>2. Toque no botão 🔑 que aparece ali.<br>3. Digite aqui o código que mostrar.</p>
+        <input class="fld" id="code" placeholder="ABCD-EFGH" autocapitalize="characters" autocomplete="off" maxlength="9" style="text-transform:uppercase">
+        <button class="btn red" id="conn" style="margin-top:10px">Conectar</button><p id="err" style="font-weight:800">${esc(note)}</p></div>`;
+      return;
+    }
+    main.innerHTML=`<div class="sec"><b>Conectado ✓</b> · código ${fmt(CODE)} <button class="btn ghost sm" id="disc" style="margin-left:8px">Desconectar</button></div>
+    <div class="sec"><h4>Loja</h4>
+      <button class="btn ${W.open?"red":""}" id="tg">${W.open?"Loja ABERTA · toque para fechar":"Loja FECHADA · toque para abrir"}</button>
+      <input class="fld" id="msg" placeholder="Aviso quando fechada (ex.: Abrimos às 18h)" value="${esc(W.msg)}">
+      <input class="fld" id="wa" inputmode="numeric" placeholder="WhatsApp: 55 + DDD + número" value="${esc(W.wa)}"></div>
+    <div class="sec"><h4>Cardápio</h4>`+
+      MENU.map((m,c)=>`<h5>${m.c}</h5>`+items(c).map(it=>`<div class="arow">
+        <input class="fld" data-k="${it.key}" data-f="n" value="${esc(it.n)}" aria-label="Nome">
+        <input class="fld" data-k="${it.key}" data-f="p" inputmode="decimal" value="${it.f?"":it.p}" ${it.f?'disabled placeholder="por tamanho"':""} aria-label="Preço">
+        <input class="fld full" data-k="${it.key}" data-f="d" value="${esc(it.d||"")}" placeholder="Descrição" aria-label="Descrição">
+        <label><input type="checkbox" data-k="${it.key}" data-f="off" ${it.off?"":"checked"}> Disponível</label>${it.ext?`<button class="btn ghost sm" data-del="${it.key}">Apagar item</button>`:""}</div>`).join("")+
+        `<button class="btn ghost sm" data-add="${c}" style="margin-top:8px">+ Novo item em ${m.c}</button>`).join("")+
+    `</div><div class="bar2"><span id="st">${esc(note||(dirty?"Alterações não salvas":""))}</span>
+      <a class="btn ghost sm" href="index.html" target="_blank" rel="noopener">Ver site</a><button class="btn red sm" id="save">Salvar alterações</button></div>`;
+  }
+  onSnapshot(ref,s=>{C={...clone(DEF),...(s.exists()?s.data():{})};if(!dirty)W=clone(C);if(CODE)draw()},e=>{note="Erro ao ler os dados ("+e.code+")";draw()});
+  const denied=x=>x&&x.code==="permission-denied"?"O código expirou ou foi trocado. Conecte de novo.":"Não foi possível salvar ("+(x&&x.code||"erro")+")";
+  main.oninput=e=>{const t=e.target;if(t.id==="code")return;dirty=true;
+    if(t.id==="msg")W.msg=t.value;else if(t.id==="wa")W.wa=t.value.replace(/\D/g,"");
+    else if(t.dataset.k)setF(t.dataset.k,t.dataset.f,t.type==="checkbox"?!t.checked:t.value);
+    const st=$("#st");if(st)st.textContent="Alterações não salvas"};
+  main.onclick=async e=>{const t=e.target.closest("button");if(!t)return;
+    if(t.id==="conn"){const c=norm($("#code").value);
+      try{const s=await getDoc(doc(db,"pairs",c));
+        if(!c||!s.exists()||s.data().exp.toMillis()<Date.now()){note="Código inválido ou expirado.";draw();return}
+        CODE=c;try{sessionStorage.setItem("tg_code",c)}catch(x){}note="";draw()}
+      catch(x){note="Código inválido ou expirado.";draw()}return}
+    if(t.id==="disc"){drop("");return}
+    if(t.id==="tg"){W.open=!W.open;
+      try{await setDoc(ref,{open:W.open,code:CODE},{merge:true});note="Loja "+(W.open?"aberta":"fechada")+" ✓";draw()}
+      catch(x){W.open=!W.open;drop(denied(x))}return}
+    if(t.id==="save"){t.disabled=true;note="Salvando…";
+      try{await setDoc(ref,{open:W.open,msg:W.msg,wa:W.wa,ov:W.ov,x:W.x,admins:C.admins||[],code:CODE});dirty=false;note="Salvo ✓";draw()}
+      catch(x){if(x&&x.code==="permission-denied")drop(denied(x));else{note=denied(x);draw()}}return}
+    if(t.dataset.add){W.x.push({id:Date.now().toString(36),c:+t.dataset.add,n:"Novo item",d:"",p:0});dirty=true;note=""}
+    else if(t.dataset.del){W.x=W.x.filter(x=>"x"+x.id!==t.dataset.del);dirty=true;note=""}
+    else return;
+    draw()};
+  draw();
+}
+</script>
+</body>
+</html>
